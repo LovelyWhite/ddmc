@@ -7,7 +7,7 @@ public class Configs {
     public static final Double latitude = 0.0;
     public static final Double longitude = 0.0;
 
-    public static final String COOKIE = "***";
+    public static final String cookie = "***";
     public static final String uid = "***";
     public static final String deviceToken = "***";
     public static final String apiVersion = "9.44.0";

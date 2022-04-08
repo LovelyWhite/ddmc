@@ -22,7 +22,7 @@ public class Requests {
 
     private static final OkHttpClient client = new OkHttpClient();
     private static final Headers headers = new Headers.Builder()
-            .set("Cookie", Configs.COOKIE)
+            .set("Cookie", Configs.cookie)
             .set("ddmc-station-id", Configs.stationId)
             .set("ddmc-latitude", String.valueOf(Configs.latitude))
             .set("ddmc-longitude", String.valueOf(Configs.longitude))

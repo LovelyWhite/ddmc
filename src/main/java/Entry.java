@@ -6,6 +6,7 @@ import utils.Requests;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Entry {
 
@@ -17,7 +18,11 @@ public class Entry {
     @SneakyThrows
     public static void main(String[] args) {
         init();
-        // 建议在此处打个断点，到点再继续。
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("已刷新购物车是否继续？(Y/N)");
+        if (!"Y".equals(scanner.nextLine())) {
+            System.exit(0);
+        }
         updating = false;
         final List<Requests.TimeRange> range = Requests.getTimeRange();
         range.forEach(e -> new Thread(() -> action(packageOrder, e)).start());

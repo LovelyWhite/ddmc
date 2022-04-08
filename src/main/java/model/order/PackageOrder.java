@@ -100,9 +100,13 @@ public class PackageOrder {
         PackageOrder params = new PackageOrder();
         PaymentOrder payment_order = new PaymentOrder();
         payment_order.setPrice(data.getTotalMoney());
-        payment_order.setFreight_discount_money("5.00");
-        payment_order.setFreight_money("5.00");
-        payment_order.setOrder_freight("0.00");
+        boolean needPayFreight = Double.parseDouble(data.getTotalMoney()) < Double.parseDouble(data.getFullToOff());
+        if (needPayFreight) {
+            payment_order.setPrice(String.valueOf(Double.parseDouble(payment_order.getPrice()) + Double.parseDouble(data.getFreightMoney())));
+        }
+        payment_order.setFreight_discount_money("0.00");
+        payment_order.setFreight_money(data.getFreightMoney());
+        payment_order.setOrder_freight(needPayFreight ? data.getFreightMoney() : "0.00");
         payment_order.setParent_order_sign(data.getParentOrderInfo().getParentOrderSign());
         payment_order.setProduct_type(1);
         payment_order.setAddress_id(Configs.addressId);
