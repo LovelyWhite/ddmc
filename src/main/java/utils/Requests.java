@@ -49,7 +49,17 @@ public class Requests {
      * - 18:30 - 22:30
      */
     public static List<TimeRange> getTimeRange() {
-        return PERIODS.stream().map(e -> new TimeRange(e, e.plusSeconds(TIME_INTERVAL))).collect(Collectors.toList());
+        final List<TimeRange> collect = PERIODS.stream().map(e -> new TimeRange(e, e.plusSeconds(TIME_INTERVAL))).collect(Collectors.toList());
+        collect.removeIf(e->LocalDateTime.now().isAfter(e.getEnd()));
+        if(collect.isEmpty()){
+            System.out.println("已超过 22:30");
+            System.exit(0);
+        }
+        final LocalDateTime newStart = LocalDateTime.now().plusMinutes(5);
+        if(!newStart.isAfter(collect.get(0).getEnd())){
+            collect.get(0).setStart(newStart);
+        }
+        return collect;
     }
 
     /**
