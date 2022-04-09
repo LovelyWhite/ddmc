@@ -517,4 +517,16 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "is_open_presale_use_virtual_stock")
         private Boolean isOpenPresaleUseVirtualStock;
     }
+
+    public String preview(){
+        List<String> _list = new ArrayList<>();
+        final List<Effective> effectives = this.getData().getProduct().getEffective();
+        if(effectives.isEmpty()){
+            return "";
+        }
+        effectives.get(0).getProducts().forEach(e -> _list.add(e.getProductName() + "\t¥" + e.getPrice() + "\t 数量:" + e.getCount()));
+        StringBuilder builder = new StringBuilder();
+        _list.forEach(e-> builder.append(e).append("\n"));
+        return builder.toString();
+    }
 }

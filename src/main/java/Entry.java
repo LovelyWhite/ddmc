@@ -66,18 +66,19 @@ public class Entry {
         while (updating) {
             try {
                 fetchCartResult = Requests.fetchCart();
-                System.out.println("updating cart  code:" + fetchCartResult.getCode() + " msg:" + fetchCartResult.getMsg());
+                System.out.println("正在更新购物车请稍等！ code:" + fetchCartResult.getCode() + " msg:" + fetchCartResult.getMsg());
                 if (fetchCartResult.getCode() != 0) {
                     continue;
                 }
                 if (fetchCartResult.getData().getProduct().getEffective().size() == 0) {
-                    System.out.println("cart is empty");
+                    System.out.println("购物车可购商品为空");
                     System.exit(0);
                 }
                 packageOrder = PackageOrder.generate(fetchCartResult);
                 updating = false;
-            } catch (Exception ignored) {
-            }
+                System.out.println("当前购物车商品:");
+                System.out.println(fetchCartResult.preview());
+            } catch (Exception ignored) {}
         }
     }
 }

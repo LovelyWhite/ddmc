@@ -29,8 +29,7 @@ public class Requests {
             .set("ddmc-uid", Configs.uid)
             .set("ddmc-city-number", Configs.cityNumber)
             .build();
-
-//  private static final long TIME_INTERVAL = 30 * 60;
+    
     private static final long TIME_INTERVAL = 4 * 60 * 60;
     private static final long BEGIN = 6 * 60 * 60 + 30 * 60;
     private static final LocalDateTime TODAY_ZERO = getTodayZero();
