@@ -1,84 +1,84 @@
-import lombok.SneakyThrows;
+import com.alibaba.fastjson.JSON;
 import model.cart.FetchCartResult;
 import model.order.AddOrderResult;
 import model.order.PackageOrder;
+import utils.Log;
 import utils.Requests;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Entry {
 
-    static boolean success = false;
     static FetchCartResult fetchCartResult = null;
     static PackageOrder packageOrder = null;
-    static boolean updating = true;
 
-    @SneakyThrows
     public static void main(String[] args) {
         init();
+        System.out.println("当前购物车商品:\n" + fetchCartResult.preview());
         Scanner scanner = new Scanner(System.in);
         System.out.println("已刷新购物车是否继续？(Y/N)");
         if (!"Y".equals(scanner.nextLine())) {
             System.exit(0);
         }
-        updating = false;
         final List<Requests.TimeRange> range = Requests.getTimeRange();
-        range.forEach(e -> new Thread(() -> action(packageOrder, e)).start());
+        range.forEach(e -> new Thread(() -> action(e)).start());
     }
 
-    public static void action(PackageOrder packageOrder, Requests.TimeRange range) {
-        while (!success) {
+    public static void action(Requests.TimeRange range) {
+        while (true) {
+            PackageOrder _packageOrder = JSON.parseObject(JSON.toJSONString(packageOrder), PackageOrder.class);
+            _packageOrder.setTimeRange(range);
             try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            try {
-                packageOrder.setTimeRange(range);
-                final AddOrderResult result = Requests.addNewOrder(packageOrder);
-                if (Objects.equals(result.getData().getTradeTag(), "PRODUCT_OUT_OF_STOCK")
-                        || Objects.equals(result.getData().getTradeTag(), "PRODUCT_INFO_HAS_CHANGED")) {
-                    if (!updating) {
-                        init();
-                    }
-                    while (updating) {
-                        System.out.println("updating");
-                    }
-                }
+                final AddOrderResult result = Requests.addNewOrder(_packageOrder);
                 if (result.getSuccess()) {
-                    success = true;
                     System.out.println("Range:【 " + range.getStart() + " | " + range.getEnd() + " 】->>>Success");
-                    return;
-                } else {
-                    System.out.println("Range:【 " + range.getStart() + " | " + range.getEnd() + " 】->>>" + result);
-                }
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    private static void init() {
-        updating = true;
-        while (updating) {
-            try {
-                fetchCartResult = Requests.fetchCart();
-                System.out.println("正在更新购物车请稍等！ code:" + fetchCartResult.getCode() + " msg:" + fetchCartResult.getMsg());
-                if (fetchCartResult.getCode() != 0) {
-                    continue;
-                }
-                if (fetchCartResult.getData().getProduct().getEffective().size() == 0) {
-                    System.out.println("购物车可购商品为空");
                     System.exit(0);
                 }
-                packageOrder = PackageOrder.generate(fetchCartResult);
-                updating = false;
-                System.out.println("当前购物车商品:");
-                System.out.println(fetchCartResult.preview());
-            } catch (Exception ignored) {}
+                System.out.println("Range:【 " + range.getStart() + " | " + range.getEnd() + " 】->>>" + result);
+                if (NEED_REFETCH_CART_TAGS.contains(result.getData().getTradeTag())) {
+                    fetchCartResult = null;
+                    init();
+                }
+            } catch (Exception e) {
+                Log.log("add new order error", e);
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (Exception ignored) {
+            }
         }
     }
+
+    private synchronized static void init() {
+        while (fetchCartResult == null) {
+            try {
+                fetchCartResult = Requests.fetchCart();
+            } catch (Exception e) {
+                Log.log("fetch cart error", e);
+            }
+            if (fetchCartResult.getCode() != 0) {
+                continue;
+            }
+            if (fetchCartResult.getData().getProduct().getEffective().size() == 0) {
+                System.out.println("购物车可购商品为空");
+                System.exit(0);
+            }
+            packageOrder = PackageOrder.generate(fetchCartResult);
+            if (!fetchCartResult.getSuccess()) {
+                fetchCartResult = null;
+            }
+        }
+    }
+
+    /**
+     * 需要重新拉去购物车的 TAGS
+     * - PRODUCT_OUT_OF_STOCK: 有商品库存不足
+     * - PRODUCT_INFO_HAS_CHANGED: 商品信息已经更改
+     */
+    private static final List<String> NEED_REFETCH_CART_TAGS = Arrays.asList(
+            "PRODUCT_OUT_OF_STOCK",
+            "PRODUCT_INFO_HAS_CHANGED"
+    );
 }
