@@ -27,6 +27,7 @@ public class Requests {
             .set("ddmc-latitude", String.valueOf(Configs.latitude))
             .set("ddmc-longitude", String.valueOf(Configs.longitude))
             .set("ddmc-uid", Configs.uid)
+            .set("ddmc-app-client-id","3")
             .set("ddmc-city-number", Configs.cityNumber)
             .build();
     

@@ -9,4 +9,5 @@ public class AddOrderParams extends BaseRequestParams {
 
     @JSONField(name = "package_order")
     private String packageOrder;
+    private String showMsg = "false";
 }
