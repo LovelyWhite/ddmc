@@ -58,7 +58,9 @@ public class Entry {
             } catch (Exception e) {
                 Log.log("fetch cart error", e);
             }
-            if (fetchCartResult.getCode() != 0) {
+            if (!fetchCartResult.getSuccess()) {
+                System.out.println("购物车拉取失败 msg:" + fetchCartResult.getMsg());
+                fetchCartResult = null;
                 continue;
             }
             if (fetchCartResult.getData().getProduct().getEffective().size() == 0) {
@@ -66,9 +68,6 @@ public class Entry {
                 System.exit(0);
             }
             packageOrder = PackageOrder.generate(fetchCartResult);
-            if (!fetchCartResult.getSuccess()) {
-                fetchCartResult = null;
-            }
         }
     }
 
