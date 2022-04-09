@@ -13,7 +13,7 @@ public class Configs {
     public static final String cityNumber = "0101";
     public static final Double latitude = 0.00;
     public static final Double longitude = 0.00;
-    public static final String appClientId = "4"; // 小程序请设置为 4
+    public static final String appClientId = "3"; // 小程序请设置为 4
 
     public static final String cookie = "";
     public static final String uid = "";

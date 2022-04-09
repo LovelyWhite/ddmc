@@ -28,30 +28,38 @@ public class Requests {
             .set("ddmc-latitude", String.valueOf(Configs.latitude))
             .set("ddmc-longitude", String.valueOf(Configs.longitude))
             .set("ddmc-uid", Configs.uid)
-            .set("ddmc-app-client-id", "3")
+            .set("ddmc-app-client-id", Configs.appClientId)
             .set("ddmc-city-number", Configs.cityNumber)
             .build();
 
-    private static final long TIME_INTERVAL = 4 * 60 * 60;
+    private static final long TIME_INTERVAL = 2 * 60 * 60;
     private static final long BEGIN = 6 * 60 * 60 + 30 * 60;
     private static final LocalDateTime TODAY_ZERO = getTodayZero();
     private static final List<LocalDateTime> PERIODS = Arrays.asList(
             TODAY_ZERO.plusSeconds(BEGIN),
             TODAY_ZERO.plusSeconds(BEGIN + TIME_INTERVAL),
             TODAY_ZERO.plusSeconds(BEGIN + 2 * TIME_INTERVAL),
-            TODAY_ZERO.plusSeconds(BEGIN + 3 * TIME_INTERVAL)
+            TODAY_ZERO.plusSeconds(BEGIN + 3 * TIME_INTERVAL),
+            TODAY_ZERO.plusSeconds(BEGIN + 4 * TIME_INTERVAL),
+            TODAY_ZERO.plusSeconds(BEGIN + 5 * TIME_INTERVAL),
+            TODAY_ZERO.plusSeconds(BEGIN + 6 * TIME_INTERVAL),
+            TODAY_ZERO.plusSeconds(BEGIN + 7 * TIME_INTERVAL)
     );
 
     /**
      * 时间段:
-     * - 6:30 - 10:30
-     * - 10:30 - 14:30
-     * - 14:30 - 18:30
-     * - 18:30 - 22:30
+     * - 6:30 - 8:30
+     * - 8:30 - 10:30
+     * - 10:30 - 12:30
+     * - 12:30 - 14:30
+     * - 14:30 - 16:30
+     * - 16:30 - 18:30
+     * - 18:30 - 20:30
+     * - 20:30 - 22:30
      */
     public static List<TimeRange> getTimeRange() {
         final List<TimeRange> collect = PERIODS.stream().map(e -> new TimeRange(e, e.plusSeconds(TIME_INTERVAL))).collect(Collectors.toList());
-        collect.removeIf(e -> Duration.between(LocalDateTime.now(), e.getEnd()).getSeconds() <= 5 * 60);
+        collect.removeIf(e -> Duration.between(LocalDateTime.now(), e.getEnd()).getSeconds() <= 30 * 60);
         if (collect.isEmpty()) {
             System.out.println("可选时间段为空");
             System.exit(0);
@@ -62,6 +70,12 @@ public class Requests {
             firstTimeRange.setStart(newStart);
         }
         return collect;
+    }
+
+    public static TimeRange getRandomTimeRange() {
+        final List<TimeRange> timeRange = getTimeRange();
+        int randomIndex = new Random(System.currentTimeMillis()).nextInt(timeRange.size());
+        return timeRange.get(randomIndex);
     }
 
     /**

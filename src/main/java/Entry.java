@@ -22,12 +22,15 @@ public class Entry {
         if (!"Y".equals(scanner.nextLine())) {
             System.exit(0);
         }
-        final List<Requests.TimeRange> range = Requests.getTimeRange();
-        range.forEach(e -> new Thread(() -> action(e)).start());
+        int threadCount = 4;
+        while (threadCount-- > 0) {
+            new Thread(Entry::action).start();
+        }
     }
 
-    public static void action(Requests.TimeRange range) {
+    public static void action() {
         while (true) {
+            Requests.TimeRange range = Requests.getRandomTimeRange();
             PackageOrder _packageOrder = JSON.parseObject(JSON.toJSONString(packageOrder), PackageOrder.class);
             _packageOrder.setTimeRange(range);
             try {
