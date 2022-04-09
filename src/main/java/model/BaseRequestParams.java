@@ -21,7 +21,7 @@ public class BaseRequestParams {
     @JSONField(name = "applet_source")
     private String appletSource = "";
     @JSONField(name = "app_client_id")
-    private String appClientId = "3";
+    private String appClientId = Configs.appClientId;
     @JSONField(name = "h5_source")
     private String h5Source = "gat";
     @JSONField(name = "sharer_uid")
