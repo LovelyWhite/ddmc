@@ -13,6 +13,7 @@ import okhttp3.*;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,10 +28,10 @@ public class Requests {
             .set("ddmc-latitude", String.valueOf(Configs.latitude))
             .set("ddmc-longitude", String.valueOf(Configs.longitude))
             .set("ddmc-uid", Configs.uid)
-            .set("ddmc-app-client-id","3")
+            .set("ddmc-app-client-id", "3")
             .set("ddmc-city-number", Configs.cityNumber)
             .build();
-    
+
     private static final long TIME_INTERVAL = 4 * 60 * 60;
     private static final long BEGIN = 6 * 60 * 60 + 30 * 60;
     private static final LocalDateTime TODAY_ZERO = getTodayZero();
@@ -50,14 +51,15 @@ public class Requests {
      */
     public static List<TimeRange> getTimeRange() {
         final List<TimeRange> collect = PERIODS.stream().map(e -> new TimeRange(e, e.plusSeconds(TIME_INTERVAL))).collect(Collectors.toList());
-        collect.removeIf(e->LocalDateTime.now().isAfter(e.getEnd()));
-        if(collect.isEmpty()){
-            System.out.println("已超过 22:30");
+        collect.removeIf(e -> Duration.between(LocalDateTime.now(), e.getEnd()).getSeconds() <= 5 * 60);
+        if (collect.isEmpty()) {
+            System.out.println("可选时间段为空");
             System.exit(0);
         }
         final LocalDateTime newStart = LocalDateTime.now().plusMinutes(5);
-        if(!newStart.isAfter(collect.get(0).getEnd())){
-            collect.get(0).setStart(newStart);
+        final TimeRange firstTimeRange = collect.get(0);
+        if (newStart.isAfter(firstTimeRange.getStart()) && newStart.isBefore(firstTimeRange.getEnd())) {
+            firstTimeRange.setStart(newStart);
         }
         return collect;
     }

@@ -2,6 +2,8 @@
 
 > 本项目使用 关爱通积分进行付款。
 
+> 由于项目更新频繁，每次使用前请拉取最新代码！！！！
+
 **目前仅支持给到叮咚买菜，其他的懒得适配了，应该是通用的只需要改几个参数，我自己用不着**
 
 **Step0**: Star 本项目。
@@ -15,6 +17,10 @@
 - IOS: Stream https://apps.apple.com/cn/app/stream/id1312141691
 
 开启抓包后，进入购物车，重新选一下地址触发 这个 -> `GET https://sunquan.api.ddxq.mobi/api/v1/user/address` <- 请求。
+
+**在 Query 里找到相关参数，在 Header 里找到 Cookie，在返回值里找到 addressId。**
+
+以下为示例：
 
 Query:
 
@@ -70,8 +76,6 @@ Response:
   }
 }
 ```
-
-在 Query 里找到相关参数，在 Header 里找到 Cookie，在返回值里找到 addressId。
 
 **Step2**: 填入参数到 Configs.java 中。
 
