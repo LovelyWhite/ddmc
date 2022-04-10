@@ -24,7 +24,7 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "station_id")
         private String stationId;
         @JSONField(name = "order_product_list")
-        private List<String> orderProductList;
+        private List<Object> orderProductList;
         @JSONField(name = "new_order_product_list")
         private List<NewOrderProductList> newOrderProductList;
         @JSONField(name = "order_product_list_sign")
@@ -58,7 +58,7 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "free_freight_notice")
         private FreeFreightNotice freeFreightNotice;
         @JSONField(name = "cart_top_floor_info")
-        private List<String> cartTopFloorInfo;
+        private List<Object> cartTopFloorInfo;
         @JSONField(name = "cart_count")
         private Integer cartCount;
         @JSONField(name = "total_count")
@@ -100,7 +100,7 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "is_support_merge_payment")
         private Integer isSupportMergePayment;
         @JSONField(name = "sodexo_nonsupport_product_list")
-        private List<String> sodexoNonsupportProductList;
+        private List<Object> sodexoNonsupportProductList;
         @JSONField(name = "valid_product_counts")
         private Map<String, Integer> validProductCounts;
     }
@@ -127,12 +127,11 @@ public class FetchCartResult extends BaseResponseResult {
         private Integer type;
         private String category;
         private String price;
-        private List<String> sizes = new ArrayList<>();
+        private List<Object> sizes = new ArrayList<>();
         private Integer count;
         private Integer status;
-        private List<String> gifts;
-        @JSONField(name = "addTime")
-        private Integer addtime;
+        private List<Object> gifts;
+        private Integer addTime;
         @JSONField(name = "cart_id")
         private String cartId;
         @JSONField(name = "activity_id")
@@ -174,7 +173,7 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "small_image")
         private String smallImage;
         @JSONField(name = "all_sizes")
-        private List<String> allSizes;
+        private List<Object> allSizes;
         @JSONField(name = "only_new_user")
         private Boolean onlyNewUser;
         @JSONField(name = "is_check")
@@ -196,7 +195,7 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "stock_number")
         private Integer stockNumber;
         @JSONField(name = "not_meet")
-        private List<String> notMeet;
+        private List<Object> notMeet;
         @JSONField(name = "is_presale")
         private Integer isPresale;
         @JSONField(name = "presale_id")
@@ -212,7 +211,7 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "is_onion")
         private Integer isOnion;
         @JSONField(name = "sub_list")
-        private List<String> subList;
+        private List<Object> subList;
         @JSONField(name = "is_booking")
         private Integer isBooking = 0;
         @JSONField(name = "today_stockout")
@@ -226,11 +225,11 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "is_fresh_food")
         private Integer isFreshFood;
         @JSONField(name = "accessory_gifts")
-        private List<String> accessoryGifts;
+        private List<Object> accessoryGifts;
         @JSONField(name = "accessory_text")
         private String accessoryText;
         @JSONField(name = "supplementary_list")
-        private List<String> supplementaryList;
+        private List<Object> supplementaryList;
         private String description;
         @JSONField(name = "parent_id")
         private String parentId = "";
@@ -265,7 +264,7 @@ public class FetchCartResult extends BaseResponseResult {
     public static class Conditions {
 
         private String desc;
-        private List<String> gifts;
+        private List<Object> gifts;
         @JSONField(name = "conditions_num")
         private String conditionsNum;
         @JSONField(name = "is_meet")
@@ -294,10 +293,10 @@ public class FetchCartResult extends BaseResponseResult {
         private String name;
         private String price;
         private String spec;
-        private List<String> sizes;
+        private List<Object> sizes;
         private Integer status;
         private Integer type;
-        private List<String> activity;
+        private List<Object> activity;
         private Integer oid;
         @JSONField(name = "product_name")
         private String productName;
@@ -326,7 +325,7 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "is_promotion")
         private Integer isPromotion;
         @JSONField(name = "sale_point_msg")
-        private List<String> salePointMsg;
+        private List<Object> salePointMsg;
         @JSONField(name = "is_presale")
         private Integer isPresale;
         @JSONField(name = "presale_delivery_date_display")
@@ -344,7 +343,7 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "is_invoice")
         private Integer isInvoice;
         @JSONField(name = "sub_list")
-        private List<String> subList;
+        private List<Object> subList;
         @JSONField(name = "badge_img")
         private String badgeImg;
         @JSONField(name = "badge_position")
@@ -352,7 +351,7 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "is_vod")
         private Boolean isVod;
         @JSONField(name = "decision_information")
-        private List<String> decisionInformation;
+        private List<Object> decisionInformation;
         @JSONField(name = "stock_number")
         private Integer stockNumber;
         @JSONField(name = "today_stockout")
@@ -366,11 +365,11 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "storage_value_id")
         private Integer storageValueId;
         @JSONField(name = "attribute_tags")
-        private List<String> attributeTags;
+        private List<Object> attributeTags;
         @JSONField(name = "desc_tags")
         private List<DescTags> descTags;
         @JSONField(name = "marketing_tags")
-        private List<String> marketingTags;
+        private List<Object> marketingTags;
         @JSONField(name = "image_preferential_choice")
         private String imagePreferentialChoice;
     }
@@ -382,8 +381,8 @@ public class FetchCartResult extends BaseResponseResult {
         private String name;
         private Integer type;
         private String desc;
-        private List<String> subtitle;
-        private List<String> gifts;
+        private List<Object> subtitle;
+        private List<Object> gifts;
         private List<Conditions> conditions;
         private String lack;
         private String condition;
@@ -447,9 +446,9 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "is_share_station")
         private Integer isShareStation;
         @JSONField(name = "only_today_products")
-        private List<String> onlyTodayProducts;
+        private List<Object> onlyTodayProducts;
         @JSONField(name = "only_tomorrow_products")
-        private List<String> onlyTomorrowProducts;
+        private List<Object> onlyTomorrowProducts;
         @JSONField(name = "package_type")
         private Integer packageType;
         @JSONField(name = "package_id")
@@ -511,7 +510,7 @@ public class FetchCartResult extends BaseResponseResult {
         @JSONField(name = "total_origin_money")
         private String totalOriginMoney;
         @JSONField(name = "stockout_gift_product")
-        private List<String> stockoutGiftProduct;
+        private List<Object> stockoutGiftProduct;
         @JSONField(name = "stockout_gift_text")
         private String stockoutGiftText;
         @JSONField(name = "is_open_presale_use_virtual_stock")

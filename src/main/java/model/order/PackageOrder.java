@@ -45,8 +45,8 @@ public class PackageOrder {
         private Integer can_used_point_num;
         private String can_used_point_money;
         private Integer is_share_station;
-        private List<String> only_today_products;
-        private List<String> only_tomorrow_products;
+        private List<Object> only_today_products;
+        private List<Object> only_tomorrow_products;
         private Integer package_type;
         private Integer package_id;
         private String front_package_text;
@@ -73,7 +73,7 @@ public class PackageOrder {
         private String small_image;
         private SaleBatch sale_batches;
         private Integer order_sort;
-        private List<String> sizes;
+        private List<Object> sizes;
     }
 
     @Data
