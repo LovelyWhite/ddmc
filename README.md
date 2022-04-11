@@ -92,15 +92,17 @@ Response:
 | payType  | 支付方式，给到:11 、小程序:6| 11 |
 | deviceToken | 设备编码，暂时不知道有什么用，但是必填，需要 url decode [decode tool](https://tool.chinaz.com/tools/urlencode.aspx) | BT9a60L6MXLxuPmfe6A2J... |
 
-**Step3**: 将你需要的菜加入到购物车并打上勾。
+**Step2**: 看一下结算页面的时间段配置，然后在 Configs.java 中配置好 PERIODS，如有禁用的时间段，注释相关代码即可。
 
-**Step4**: Run Entry.main()。
+**Step4**: 将你需要的菜加入到购物车并打上勾。
 
-**Step5**: 输入 Y，确认开始买菜。
+**Step5**: Run Entry.main()。
 
-**Step6**: 开始抢菜后会滚动刷新请求信息直到 success。
+**Step6**: 输入 Y，确认开始买菜。
 
-**Step7**: 打开给到叮咚/叮咚小程序付款。
+**Step7**: 开始抢菜后会滚动刷新请求信息直到 success。
+
+**Step8**: 打开给到叮咚/叮咚小程序付款。
 
 ## 原理
 

@@ -32,33 +32,8 @@ public class Requests {
             .set("ddmc-city-number", Configs.cityNumber)
             .build();
 
-    private static final long TIME_INTERVAL = 2 * 60 * 60;
-    private static final long BEGIN = 6 * 60 * 60 + 30 * 60;
-    private static final LocalDateTime TODAY_ZERO = getTodayZero();
-    private static final List<LocalDateTime> PERIODS = Arrays.asList(
-            TODAY_ZERO.plusSeconds(BEGIN),
-            TODAY_ZERO.plusSeconds(BEGIN + TIME_INTERVAL),
-            TODAY_ZERO.plusSeconds(BEGIN + 2 * TIME_INTERVAL),
-            TODAY_ZERO.plusSeconds(BEGIN + 3 * TIME_INTERVAL),
-            TODAY_ZERO.plusSeconds(BEGIN + 4 * TIME_INTERVAL),
-            TODAY_ZERO.plusSeconds(BEGIN + 5 * TIME_INTERVAL),
-            TODAY_ZERO.plusSeconds(BEGIN + 6 * TIME_INTERVAL),
-            TODAY_ZERO.plusSeconds(BEGIN + 7 * TIME_INTERVAL)
-    );
-
-    /**
-     * 时间段:
-     * - 6:30 - 8:30
-     * - 8:30 - 10:30
-     * - 10:30 - 12:30
-     * - 12:30 - 14:30
-     * - 14:30 - 16:30
-     * - 16:30 - 18:30
-     * - 18:30 - 20:30
-     * - 20:30 - 22:30
-     */
     public static List<TimeRange> getTimeRange() {
-        final List<TimeRange> collect = PERIODS.stream().map(e -> new TimeRange(e, e.plusSeconds(TIME_INTERVAL))).collect(Collectors.toList());
+        final List<TimeRange> collect = Configs.PERIODS.stream().map(e -> new TimeRange(e, e.plusSeconds(Configs.TIME_INTERVAL))).collect(Collectors.toList());
         collect.removeIf(e -> Duration.between(LocalDateTime.now(), e.getEnd()).getSeconds() <= 30 * 60);
         if (collect.isEmpty()) {
             System.out.println("可选时间段为空");
@@ -129,11 +104,6 @@ public class Requests {
         Log.log("request response", url, method, result);
         return JSON.parseObject(result, clz);
     }
-
-    private static LocalDateTime getTodayZero() {
-        return LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
-    }
-
 
     @AllArgsConstructor
     @Data
