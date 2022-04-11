@@ -89,6 +89,7 @@ Response:
 | uid  | 用户编号，你的用户 id | 62427ff916d86b0002834a53 |
 | addressId  | 地址id | 624280f4c1f17400017b2249 |
 | appClientId  | 客户端 id，给到:3 、小程序:4| 3 |
+| payType  | 支付方式，给到:11 、小程序:6| 11 |
 | deviceToken | 设备编码，暂时不知道有什么用，但是必填，需要 url decode [decode tool](https://tool.chinaz.com/tools/urlencode.aspx) | BT9a60L6MXLxuPmfe6A2J... |
 
 **Step3**: 将你需要的菜加入到购物车并打上勾。

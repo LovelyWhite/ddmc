@@ -111,7 +111,7 @@ public class PackageOrder {
         payment_order.setProduct_type(1);
         payment_order.setAddress_id(Configs.addressId);
         payment_order.setReceipt_without_sku(null);
-        payment_order.setPay_type(11);
+        payment_order.setPay_type(Configs.payType);
         payment_order.setVip_money("");
         payment_order.setVip_buy_user_ticket_id("");
         payment_order.setCoupons_money("");
