@@ -88,8 +88,8 @@ Response:
 | cookie | 用户验证信息，没有这个将无法发送请求 | DDXQSESSID=75d1cc10b3b06944956e2cd54b51e16a |
 | uid  | 用户编号，你的用户 id | 62427ff916d86b0002834a53 |
 | addressId  | 地址id | 624280f4c1f17400017b2249 |
-| appClientId  | 客户端 id，给到:3 、小程序:4| 3 |
-| payType  | 支付方式，给到:11 、小程序:6| 11 |
+| channel  | GAT 给到、WEAPP 小程序| GAT |
+| TIME_RANGE  | INTERVAL_2 以两小时为间隔的时间段、INTERVAL_4、INTERVAL_8 | INTERVAL_8 |
 | deviceToken | 设备编码，暂时不知道有什么用，但是必填，需要 url decode [decode tool](https://tool.chinaz.com/tools/urlencode.aspx) | BT9a60L6MXLxuPmfe6A2J... |
 
 **Step2**: 看一下结算页面的时间段配置，然后在 Configs.java 中配置好 PERIODS，如有禁用的时间段，注释相关代码即可。

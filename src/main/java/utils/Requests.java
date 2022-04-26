@@ -18,10 +18,9 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
 public class Requests {
-
     private static final OkHttpClient client = new OkHttpClient();
+
     private static final Headers headers = new Headers.Builder()
             .set("Cookie", Configs.cookie)
             .set("ddmc-station-id", Configs.stationId)
@@ -30,6 +29,8 @@ public class Requests {
             .set("ddmc-uid", Configs.uid)
             .set("ddmc-app-client-id", Configs.appClientId)
             .set("ddmc-city-number", Configs.cityNumber)
+            .set("ddmc-api-version", Configs.apiVersion)
+            .set("ddmc-build-version",Configs.appVersion)
             .build();
 
     public static List<TimeRange> getTimeRange() {
@@ -100,7 +101,10 @@ public class Requests {
         }
         Request request = new Request.Builder().url(url).headers(headers).method(method, "GET".equals(method) ? null : builder.build()).build();
         final Response response = client.newCall(request).execute();
-        final String result = Objects.requireNonNull(response.body()).string();
+        String result = Objects.requireNonNull(response.body()).string();
+        if (result.contains("AssertError")) {
+            result = "{\"msg\":\"AssertError\",\"code\":405,\"data\":null,\"isSuccess\":false}";
+        }
         Log.log("request response", url, method, result);
         return JSON.parseObject(result, clz);
     }

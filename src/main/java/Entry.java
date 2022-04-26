@@ -22,7 +22,7 @@ public class Entry {
         if (!"Y".equals(scanner.nextLine())) {
             System.exit(0);
         }
-        int threadCount = 4;
+        int threadCount = 1;
         while (threadCount-- > 0) {
             new Thread(Entry::action).start();
         }
@@ -35,11 +35,13 @@ public class Entry {
             _packageOrder.setTimeRange(range);
             try {
                 final AddOrderResult result = Requests.addNewOrder(_packageOrder);
-                if (result.getSuccess()) {
-                    System.out.println("Range:【 " + range.getStart() + " | " + range.getEnd() + " 】->>>Success");
+                System.out.println("Range:【 " + range.getStart() + " | " + range.getEnd() + " 】->>>" + result);
+                if (result.getSuccess() || result.getCode() == 1111) {
                     System.exit(0);
                 }
-                System.out.println("Range:【 " + range.getStart() + " | " + range.getEnd() + " 】->>>" + result);
+                if ("RISK_ORDER_BEFORE".equals(result.getData().getTradeTag())) {
+                    System.exit(0);
+                }
                 if (NEED_REFETCH_CART_TAGS.contains(result.getData().getTradeTag())) {
                     fetchCartResult = null;
                     init();
@@ -57,8 +59,10 @@ public class Entry {
     private synchronized static void init() {
         while (fetchCartResult == null) {
             try {
+                Thread.sleep(1000);
                 fetchCartResult = Requests.fetchCart();
             } catch (Exception e) {
+                System.out.println("error" + e.getMessage());
                 Log.log("fetch cart error", e);
             }
             if (!fetchCartResult.getSuccess()) {
