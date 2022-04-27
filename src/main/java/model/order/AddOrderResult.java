@@ -14,7 +14,6 @@ public class AddOrderResult extends BaseResponseResult {
     public static class Data {
         private String tradeTag;
         private List<StockOutProduct> stockout_products;
-
     }
 
     @lombok.Data

@@ -46,7 +46,7 @@ public class Configs {
      * 请根据购物车结算页面实际的日期范围填写
      * 如需禁用某个具体的某个时间段，将该时间段注释掉即可。
      */
-    public static final String TIME_RANGE = "INTERVAL_8";
+    public static final String TIME_RANGE = "AUTO";
 
     /*
      * 当渠道选择为 CUSTOM 时请配置 CUSTOM 对应的channel
@@ -80,7 +80,7 @@ public class Configs {
                 TODAY_ZERO.plusSeconds(BEGIN),   // 6:30 - 14:30
                 TODAY_ZERO.plusSeconds(BEGIN + 8 * 60 * 60)) // 14:30 - 22:30
         );
-        put("AUTO", Collections.singletonList(TODAY_ZERO.plusSeconds(5 * 60 * 60)));
+        put("AUTO", Collections.singletonList(LocalDateTime.of(2023, 3, 30, 5, 0, 0)));
     }};
 
     private static final Map<String, Integer> TIME_INTERVALS = new HashMap<String, Integer>() {{

@@ -30,6 +30,9 @@ public class Entry {
 
     public static void action() {
         while (true) {
+            if (fetchCartResult == null) {
+                continue;
+            }
             Requests.TimeRange range = Requests.getRandomTimeRange();
             PackageOrder _packageOrder = JSON.parseObject(JSON.toJSONString(packageOrder), PackageOrder.class);
             _packageOrder.setTimeRange(range);
