@@ -35,4 +35,6 @@ public class BaseRequestParams {
     private String isLoad = "1";
     @JSONField(name = "ab_config")
     private String abConfig = "{\"key_onion\":\"C\"}";
+    private String sesi;
+    private String nars;
 }

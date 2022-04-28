@@ -49,7 +49,7 @@ public class Configs {
     public static final String TIME_RANGE = "AUTO";
 
     /*
-     * 当渠道选择为 CUSTOM 时请配置 CUSTOM 对应的channel
+     * 当渠道选择为 CUSTOM 时请配置 CUSTOM 对应的 channel
      */
     private static final Map<String, Channel> CHANNELS = new HashMap<String, Channel>() {{
         put("GAT", new Channel("3", 11, "9.44.0", "2.74.2"));

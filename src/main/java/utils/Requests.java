@@ -30,7 +30,7 @@ public class Requests {
             .set("ddmc-app-client-id", Configs.appClientId)
             .set("ddmc-city-number", Configs.cityNumber)
             .set("ddmc-api-version", Configs.apiVersion)
-            .set("ddmc-build-version",Configs.appVersion)
+            .set("ddmc-build-version", Configs.appVersion)
             .build();
 
     public static List<TimeRange> getTimeRange() {
@@ -83,7 +83,7 @@ public class Requests {
      * @throws IOException
      */
     public static <R extends BaseResponseResult, P extends BaseRequestParams> R baseRequest(String url, String method, P params, Class<R> clz) throws IOException {
-
+        Sign.doSign(params);
         final Map<String, String> map = !Objects.isNull(params) ? JSON.parseObject(JSON.toJSONString(params), Map.class) : new HashMap<>();
         FormBody.Builder builder = new FormBody.Builder();
         Log.log("request start", url, method, map);
