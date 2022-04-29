@@ -16,7 +16,8 @@ public class Entry {
 
     public static void main(String[] args) {
         init();
-        System.out.println("当前购物车商品:\n" + fetchCartResult.preview());
+        System.out.println("当前购物车已选中商品:\n" + fetchCartResult.preview());
+        System.out.println("总价（包含运费）:" + packageOrder.getPayment_order().getPrice());
         Scanner scanner = new Scanner(System.in);
         System.out.println("已刷新购物车是否继续？(Y/N)");
         if (!"Y".equals(scanner.nextLine())) {
@@ -62,10 +63,9 @@ public class Entry {
     private synchronized static void init() {
         while (fetchCartResult == null) {
             try {
-                Thread.sleep(1000);
                 fetchCartResult = Requests.fetchCart();
             } catch (Exception e) {
-                System.out.println("error" + e.getMessage());
+                System.out.println("error：" + e.getMessage());
                 Log.log("fetch cart error", e);
             }
             if (!fetchCartResult.getSuccess()) {
@@ -73,7 +73,8 @@ public class Entry {
                 fetchCartResult = null;
                 continue;
             }
-            if (fetchCartResult.getData().getProduct().getEffective().size() == 0) {
+            final List<FetchCartResult.Effective> effectives = fetchCartResult.getData().getProduct().getEffective();
+            if (effectives.size() == 0 || effectives.get(0).getProducts().stream().noneMatch(e -> e.getIsCheck() == 1)) {
                 System.out.println("购物车可购商品为空");
                 System.exit(0);
             }

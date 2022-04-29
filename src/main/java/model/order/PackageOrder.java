@@ -117,23 +117,25 @@ public class PackageOrder {
         payment_order.setCoupons_money("");
         payment_order.setCoupons_id("");
         params.setPayment_order(payment_order);
-        final List<Product> products = data.getProduct().getEffective().get(0).getProducts().stream().map(e -> {
-            Product product = new Product();
-            product.setId(e.getId());
-            product.setParent_id(e.getParentId());
-            product.setCount(e.getCount());
-            product.setCart_id(e.getCartId());
-            product.setPrice(e.getAddPrice());
-            product.setDelivery_date_tag("");
-            product.setProduct_type(e.getProductType());
-            product.setIs_booking(e.getIsBooking());
-            product.setProduct_name(e.getProductName());
-            product.setSmall_image("");
-            product.setSale_batches(e.getSaleBatches());
-            product.setOrder_sort(e.getOrderSort());
-            product.setSizes(e.getSizes());
-            return product;
-        }).collect(Collectors.toList());
+        final List<Product> products = data.getProduct().getEffective().get(0)
+                .getProducts().stream().filter(e -> e.getIsCheck() == 1)
+                .map(e -> {
+                    Product product = new Product();
+                    product.setId(e.getId());
+                    product.setParent_id(e.getParentId());
+                    product.setCount(e.getCount());
+                    product.setCart_id(e.getCartId());
+                    product.setPrice(e.getAddPrice());
+                    product.setDelivery_date_tag("");
+                    product.setProduct_type(e.getProductType());
+                    product.setIs_booking(e.getIsBooking());
+                    product.setProduct_name(e.getProductName());
+                    product.setSmall_image("");
+                    product.setSale_batches(e.getSaleBatches());
+                    product.setOrder_sort(e.getOrderSort());
+                    product.setSizes(e.getSizes());
+                    return product;
+                }).collect(Collectors.toList());
         Package pkg = new Package();
         pkg.setProducts(products);
         pkg.setTotal_money(data.getTotalMoney());

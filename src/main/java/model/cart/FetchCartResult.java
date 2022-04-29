@@ -517,15 +517,15 @@ public class FetchCartResult extends BaseResponseResult {
         private Boolean isOpenPresaleUseVirtualStock;
     }
 
-    public String preview(){
+    public String preview() {
         List<String> _list = new ArrayList<>();
         final List<Effective> effectives = this.getData().getProduct().getEffective();
-        if(effectives.isEmpty()){
+        if (effectives.isEmpty()) {
             return "";
         }
-        effectives.get(0).getProducts().forEach(e -> _list.add(e.getProductName() + "\t¥" + e.getPrice() + "\t 数量:" + e.getCount()));
+        effectives.get(0).getProducts().stream().filter(e -> e.getIsCheck() == 1).forEach(e -> _list.add(e.getProductName() + "\t¥" + e.getPrice() + "\t 数量:" + e.getCount()));
         StringBuilder builder = new StringBuilder();
-        _list.forEach(e-> builder.append(e).append("\n"));
+        _list.forEach(e -> builder.append(e).append("\n"));
         return builder.toString();
     }
 }

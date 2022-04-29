@@ -23,7 +23,7 @@ public class BaseRequestParams {
     @JSONField(name = "app_client_id")
     private String appClientId = Configs.appClientId;
     @JSONField(name = "h5_source")
-    private String h5Source = "gat";
+    private String h5Source = Configs.h5Source;
     @JSONField(name = "sharer_uid")
     private String sharerUid = "";
     @JSONField(name = "s_id")
@@ -34,7 +34,8 @@ public class BaseRequestParams {
     @JSONField(name = "is_load")
     private String isLoad = "1";
     @JSONField(name = "ab_config")
-    private String abConfig = "{\"key_onion\":\"C\"}";
+    private String abConfig = "{\"key_onion\":\"C\",\"key_cart_discount_price\":\"C\"}";
+    private String channel = Configs.ddmcChannel;
     private String sesi;
     private String nars;
 }

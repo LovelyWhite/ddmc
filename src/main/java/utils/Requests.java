@@ -22,15 +22,23 @@ public class Requests {
     private static final OkHttpClient client = new OkHttpClient();
 
     private static final Headers headers = new Headers.Builder()
+            .set("Host", "maicai.api.ddxq.mobi")
+            .set("Referer", Configs.referer)
             .set("Cookie", Configs.cookie)
-            .set("ddmc-station-id", Configs.stationId)
-            .set("ddmc-latitude", String.valueOf(Configs.latitude))
-            .set("ddmc-longitude", String.valueOf(Configs.longitude))
-            .set("ddmc-uid", Configs.uid)
-            .set("ddmc-app-client-id", Configs.appClientId)
             .set("ddmc-city-number", Configs.cityNumber)
             .set("ddmc-api-version", Configs.apiVersion)
+            .set("User-Agent", Configs.userAgent)
             .set("ddmc-build-version", Configs.appVersion)
+            .set("ddmc-longitude", String.valueOf(Configs.longitude))
+            .set("ddmc-latitude", String.valueOf(Configs.latitude))
+            .set("ddmc-app-client-id", Configs.appClientId)
+            .set("ddmc-uid", Configs.uid)
+            .set("ddmc-channel", Configs.ddmcChannel)
+            .set("ddmc-device-id", "")
+            .set("ddmc-station-id", Configs.stationId)
+            .set("ddmc-ip", "")
+            .set("Accept-Language", "zh-CN,zh-Hans;q=0.9")
+            .set("ddms-time", String.valueOf(new Date().getTime() / 1000))
             .build();
 
     public static List<TimeRange> getTimeRange() {
